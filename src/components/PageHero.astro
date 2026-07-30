@@ -1,0 +1,26 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="bg-moss-900 text-sand-50 relative overflow-hidden">
+  <div
+    class="absolute inset-0 bg-[radial-gradient(120%_100%_at_10%_0%,rgba(184,146,74,0.28),transparent_55%)]"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="container-page relative py-16 sm:py-20">
+    {
+      eyebrow && (
+        <p class="text-gold-300 text-xs font-semibold tracking-[0.22em] uppercase">{eyebrow}</p>
+      )
+    }
+    <h1 class="mt-4 text-4xl leading-[1.05] sm:text-5xl">{title}</h1>
+    {lead && <p class="text-sand-200/80 mt-6 max-w-2xl text-lg leading-relaxed">{lead}</p>}
+  </div>
+</section>

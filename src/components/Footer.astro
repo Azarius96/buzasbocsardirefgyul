@@ -1,0 +1,64 @@
+---
+import { nav, site, contact } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-moss-900 text-sand-100 mt-24">
+  <div class="container-page grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <p class="text-sand-50 font-serif text-2xl">{site.name}</p>
+      <p class="text-sand-200/70 mt-3 max-w-sm text-sm leading-relaxed">
+        {site.presbytery}, {site.diocese}. A gyülekezet leányegyháza Alsókarácsonyfalva.
+      </p>
+      <p class="text-gold-300 mt-6 font-serif text-lg">„{site.tagline}”</p>
+    </div>
+
+    <div>
+      <h2 class="text-sand-200/60 text-xs font-semibold tracking-[0.18em] uppercase">Oldalak</h2>
+      <ul class="mt-4 space-y-2 text-sm">
+        {
+          nav.map((item) => (
+            <li>
+              <a class="text-sand-100/80 hover:text-gold-300 transition-colors" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sand-200/60 text-xs font-semibold tracking-[0.18em] uppercase">
+        Elérhetőség
+      </h2>
+      <ul class="text-sand-100/80 mt-4 space-y-2 text-sm">
+        <li>{contact.street}</li>
+        <li>{contact.postalCode} {contact.city}, {contact.county}</li>
+        <li>
+          <a class="hover:text-gold-300 transition-colors" href={`mailto:${contact.parishEmail}`}>
+            {contact.parishEmail}
+          </a>
+        </li>
+        <li>
+          <a
+            class="hover:text-gold-300 transition-colors"
+            href={site.directoryUrl}
+            rel="noopener noreferrer"
+            target="_blank">Egyházkerületi címtár</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-sand-100/10 border-t">
+    <div
+      class="container-page text-sand-200/50 flex flex-col gap-2 py-6 text-xs sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {site.name}</p>
+      <p>Műemlékjegyzék kód: {contact.monumentCode}</p>
+    </div>
+  </div>
+</footer>

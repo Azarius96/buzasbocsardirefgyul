@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { timeline } from '../data/site';
+---
+
+<BaseLayout
+  title="Történet"
+  description="Búzásbocsárd és a református egyházközség története 1303-tól napjainkig: névváltozatok, birtokosok, a reformáció és a templom építéstörténete."
+>
+  <PageHero
+    eyebrow="1303 – napjaink"
+    title="A falu és a gyülekezet története"
+    lead="Búzásbocsárd a Küküllümenti dombok és a Közép-Marosmente lankás dombjai között, az úgynevezett Maros–Küküllő közben fekszik, a Kis Dunának becézett Bocsárd-pataka mentén."
+  />
+
+  <Section eyebrow="A település" title="Maros menti magyar sziget">
+    <div class="prose-church mt-8 max-w-3xl text-lg">
+      <p>
+        Búzásbocsárd a Küküllőszögtől nem messze, Alsókarácsonyfalvától mintegy 3 km-re,
+        Balázsfalvától 12 km-re északnyugatra helyezkedik el. Tájszólásában a Maros menti település
+        főleg Magyarlapáddal, Magyarbecével, Magyarkapuddal és Magyarpéterfalvával képezi azokat a
+        magyar szigeteket, amelyek Nagyenyedtől Balázsfalváig jelzik a reformátusság Fehér megyei
+        jelenlétét.
+      </p>
+      <p>
+        A templomos település első írásos említése 1303-ban <strong>Bochard</strong> néven jelentkezett
+        a forrásokban. 1332-ben Buzásbuchard, 1410-ben Bochard, aliter Gyanad, 1587-ben Buzás–Boczyard
+        formában fordult elő. 1332-ben plébániatemploma volt; ekkor Mihály, majd Mátyás voltak katolikus
+        lelkészei.
+      </p>
+      <p>
+        Érdekessége, hogy a település névetimológiája rokon a 25 km-re fekvő Borosbocsárddal: a
+        középkorban (1303-tól 1440-ig) a bocsárok a király pohárnokai, de vincellérei is voltak. A
+        korai középkorban a neves Gyógyi (Diódi) család birtoka volt. Az újkorban a híres diplomata
+        Macskási Boldizsár ispán, erdélyi hadparancsnok és felesége, Kapi Anna voltak a birtokosai.
+        Bocsárdot 1615-től a Macskási család birtokolta, amelyet Bethlen Gábortól kapott adományba.
+        1710-ben Kapi Anna egy kelyhet is adományozott a bocsárdiaknak.
+      </p>
+      <p>
+        Helyi hagyomány szintjén él, mégis feltételezhető, hogy a Szent István törvényei
+        következtében kialakuló központi település gyűjtötte össze Tövisvölgy, Gyónát, Panka,
+        Kornuly, Erdőkmegett és Vásárhídja (ahol egykor kúria is állt) lakóit, ezzel kialakítva a
+        középkori falu történelmi magját, ahová a XIV. századi templom is épült.
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="muted" eyebrow="Idővonal" title="Évszázadok mérföldkövei">
+    <ol class="mt-12 space-y-0">
+      {
+        timeline.map((item) => (
+          <li class="reveal border-gold-400/50 grid gap-2 border-l-2 pb-10 pl-6 last:pb-0 sm:grid-cols-[9rem_1fr] sm:gap-8">
+            <p class="text-gold-600 font-serif text-xl">{item.year}</p>
+            <div>
+              <h3 class="text-xl">{item.title}</h3>
+              <p class="text-moss-800/85 mt-2 leading-relaxed">{item.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <Section eyebrow="Búzásbocsárd szülötte" title="Herepei Károly (1817–1906)">
+    <div class="prose-church mt-8 max-w-3xl text-lg">
+      <p>
+        A falu híres szülötte Herepei Károly régész-geológus, a nagyenyedi Bethlen-kollégium jeles
+        professzora. Emléktábláját 2024. október 6-án, a leszármazottak jelenlétében leplezték le a
+        búzásbocsárdi református templomban, ugyanazon az ünnepségen, amelyen a gyülekezet új
+        lelkipásztorát is beiktatták. Az ünnepség az ótemetőben, a frissen felújított
+        Herepei-síremlékek megkoszorúzásával zárult.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

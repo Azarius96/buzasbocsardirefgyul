@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f382f" />
+      <stop offset="1" stop-color="#0c1712" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g stroke="#d3b06a" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <path d="M980 520V300" />
+    <path d="M930 340h100" />
+  </g>
+  <text x="90" y="270" fill="#e2c88f" font-family="Georgia, serif" font-size="30" letter-spacing="6">
+    ERDÉLY · FEHÉR MEGYE
+  </text>
+  <text x="90" y="360" fill="#faf8f4" font-family="Georgia, serif" font-size="72">Búzásbocsárdi</text>
+  <text x="90" y="440" fill="#faf8f4" font-family="Georgia, serif" font-size="72">
+    Református Egyházközség
+  </text>
+  <text x="90" y="510" fill="#bfd6c8" font-family="Georgia, serif" font-size="32">
+    „Krisztus szeretete kötelez minket”
+  </text>
+</svg>

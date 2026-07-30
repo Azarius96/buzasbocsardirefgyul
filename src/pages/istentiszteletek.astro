@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { contact, services } from '../data/site';
+
+const sacraments = [
+  {
+    title: 'Keresztelő',
+    body: 'A gyermek megkeresztelését a szülők a lelkipásztornál jelentik be. A keresztelőt megelőzően családi beszélgetésre kerül sor.',
+  },
+  {
+    title: 'Konfirmáció',
+    body: 'A konfirmációi előkészítő során a fiatalok megismerik a református hit alapjait, majd az úrvacsorai közösség tagjai lesznek.',
+  },
+  {
+    title: 'Esketés',
+    body: 'Az egyházi esküvőt kérjük legalább néhány hónappal korábban egyeztetni, hogy a jegyesbeszélgetésekre is idő legyen.',
+  },
+  {
+    title: 'Temetés',
+    body: 'Gyász esetén hívja a lelkipásztort; a szolgálat idejét és rendjét közösen beszéljük meg.',
+  },
+];
+---
+
+<BaseLayout
+  title="Gyülekezeti élet"
+  description="A Búzásbocsárdi Református Egyházközség istentiszteleti rendje, bibliaóra, vasárnapi iskola, valamint a keresztelő, konfirmáció, esketés és temetés tudnivalói."
+>
+  <PageHero
+    eyebrow="Gyülekezeti élet"
+    title="Istentiszteleti rend és alkalmaink"
+    lead="Vasárnapi istentiszteletek Búzásbocsárdon és Alsókarácsonyfalván, hétközi bibliaóra és gyermekfoglalkozás – az élő gyülekezet ritmusa."
+  />
+
+  <Section eyebrow="Heti rend" title="Állandó alkalmaink">
+    <div class="border-moss-900/10 mt-10 overflow-hidden rounded-2xl border">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-sand-100 text-moss-700 text-xs tracking-[0.14em] uppercase">
+          <tr>
+            <th scope="col" class="px-5 py-4">Nap</th>
+            <th scope="col" class="px-5 py-4">Időpont</th>
+            <th scope="col" class="px-5 py-4">Alkalom</th>
+            <th scope="col" class="px-5 py-4">Helyszín</th>
+          </tr>
+        </thead>
+        <tbody class="divide-moss-900/10 divide-y">
+          {
+            services.map((service) => (
+              <tr class="align-top">
+                <td class="text-moss-900 px-5 py-4 font-semibold">{service.day}</td>
+                <td class="text-moss-800 px-5 py-4 font-serif text-lg">{service.time}</td>
+                <td class="px-5 py-4">
+                  <span class="text-moss-900 font-semibold">{service.title}</span>
+                  <span class="text-moss-700/75 mt-1 block">{service.note}</span>
+                </td>
+                <td class="text-moss-700/85 px-5 py-4">{service.place}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="text-moss-700/70 mt-6 text-sm">
+      Az időpontok az ünnepi időszakokban változhatnak; a pontos rendről a templomi hirdetésekben,
+      illetve a lelkipásztortól tájékozódhat.
+    </p>
+  </Section>
+
+  <Section tone="muted" eyebrow="Sákramentumok és szolgálatok" title="Élet fordulópontjain">
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        sacraments.map((item) => (
+          <article class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-7">
+            <h3 class="text-xl">{item.title}</h3>
+            <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+    <p class="text-moss-800/80 mt-10 text-sm">
+      Bejelentés és egyeztetés:
+      <a
+        class="text-moss-900 decoration-gold-400 font-semibold underline underline-offset-4"
+        href={`mailto:${contact.parishEmail}`}>{contact.parishEmail}</a
+      >
+    </p>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import ChurchArt from '../components/ChurchArt.astro';
+import { contact, facts, ministers, services, site, timeline } from '../data/site';
+
+const highlights = timeline.slice(0, 4);
+const currentMinister = ministers.find((m) => 'current' in m && m.current);
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="bg-moss-900 text-sand-50 relative isolate overflow-hidden">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(110%_90%_at_15%_0%,rgba(184,146,74,0.32),transparent_60%),radial-gradient(80%_80%_at_100%_100%,rgba(69,119,96,0.55),transparent_60%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="container-page relative grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.15fr_1fr]"
+    >
+      <div>
+        <p class="text-gold-300 text-xs font-semibold tracking-[0.24em] uppercase">
+          Erdély · Fehér megye · Bucerdea Grânoasă
+        </p>
+        <h1 class="mt-6 text-4xl leading-[1.03] sm:text-6xl">
+          Búzásbocsárdi<br />Református Egyházközség
+        </h1>
+        <p class="text-sand-200/85 mt-7 max-w-xl text-lg leading-relaxed">
+          Hét évszázad óta áll a falu közepén, egy magaslaton a templomunk. Kőszószékünk 1657-ből
+          való, harangunk 1450 körül készült Nagyszebenben – az istentiszteletre hívó szó azóta is
+          változatlan.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a
+            href="/istentiszteletek"
+            class="bg-gold-400 text-moss-950 hover:bg-gold-300 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+          >
+            Istentiszteleti rend
+          </a>
+          <a
+            href="/tortenet"
+            class="border-sand-100/30 text-sand-50 hover:bg-sand-100/10 rounded-full border px-6 py-3 text-sm font-semibold transition-colors"
+          >
+            A gyülekezet története
+          </a>
+        </div>
+      </div>
+      <ChurchArt class="mx-auto w-full max-w-sm lg:max-w-none" />
+    </div>
+  </section>
+
+  <!-- Számok -->
+  <section class="border-moss-900/10 bg-sand-100 border-b">
+    <div class="container-page grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        facts.map((fact) => (
+          <div class="reveal">
+            <p class="text-moss-800 font-serif text-4xl">{fact.value}</p>
+            <p class="text-moss-900 mt-2 text-sm font-semibold">{fact.label}</p>
+            <p class="text-moss-700/70 text-sm">{fact.detail}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Köszöntés -->
+  <Section eyebrow="Köszöntjük" title="Isten hozta a gyülekezetünk honlapján!">
+    <div class="mt-10 grid gap-10 lg:grid-cols-2">
+      <div class="prose-church reveal text-lg">
+        <p>
+          Búzásbocsárd a Küküllőszögtől nem messze, Alsókarácsonyfalvától mintegy 3 km-re,
+          Balázsfalvától 12 km-re északnyugatra fekszik, a Kis Dunának becézett Bocsárd-pataka
+          mentén. Tájszólásában a Maros menti település Magyarlapáddal, Magyarbecével,
+          Magyarkapuddal és Magyarpéterfalvával együtt képezi azokat a magyar szigeteket, amelyek
+          Nagyenyedtől Balázsfalváig jelzik a reformátusság Fehér megyei jelenlétét.
+        </p>
+        <p>
+          A gyülekezetben ma <strong>600-an</strong> vagyunk, a leányegyházunk Alsókarácsonyfalva. Legyen
+          szó vasárnapi istentiszteletről, keresztelőről, esküvőről vagy éppen a templom történetéről
+          – szeretettel várjuk, és állunk rendelkezésére.
+        </p>
+      </div>
+      <div class="reveal border-moss-900/10 bg-sand-100 rounded-3xl border p-8">
+        <p class="text-gold-600 text-xs font-semibold tracking-[0.2em] uppercase">Lelkipásztor</p>
+        <p class="text-moss-900 mt-3 font-serif text-2xl">{contact.minister}</p>
+        <p class="text-moss-700/80 text-sm">
+          {contact.ministerTitle} · {currentMinister?.period ?? '2024–'}
+        </p>
+        <dl class="mt-6 space-y-3 text-sm">
+          <div>
+            <dt class="text-moss-900 font-semibold">Parókia</dt>
+            <dd class="text-moss-800/80">
+              {contact.street}, {contact.postalCode}
+              {contact.city}, {contact.county}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-moss-900 font-semibold">E-mail</dt>
+            <dd>
+              <a
+                class="text-moss-700 decoration-gold-400 hover:text-moss-900 underline underline-offset-4"
+                href={`mailto:${contact.parishEmail}`}>{contact.parishEmail}</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt class="text-moss-900 font-semibold">Egyházmegye</dt>
+            <dd class="text-moss-800/80">{site.presbytery}</dd>
+          </div>
+        </dl>
+        <a
+          href="/kapcsolat"
+          class="text-moss-800 hover:text-moss-950 mt-8 inline-flex items-center gap-2 text-sm font-semibold"
+        >
+          Kapcsolatfelvétel
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Istentiszteletek -->
+  <Section
+    tone="dark"
+    eyebrow="Istentiszteleti rend"
+    title="Együtt, hétről hétre"
+    lead="Az alkalmakon szeretettel látunk minden érdeklődőt – helybélit és hazatérőt, átutazót és vendéget egyaránt."
+  >
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        services.map((service) => (
+          <div class="reveal border-sand-100/15 bg-sand-100/5 rounded-2xl border p-6">
+            <div class="flex items-baseline justify-between gap-4">
+              <p class="text-gold-300 text-sm font-semibold tracking-wide uppercase">
+                {service.day}
+              </p>
+              <p class="text-sand-50 font-serif text-2xl">{service.time}</p>
+            </div>
+            <p class="text-sand-50 mt-3 font-serif text-xl">{service.title}</p>
+            <p class="text-sand-200/70 mt-1 text-sm">{service.place}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="text-sand-200/60 mt-8 text-sm">
+      Az ünnepi és rendkívüli alkalmakról a templomi hirdetésekben tájékozódhat.
+    </p>
+  </Section>
+
+  <!-- Történelem kivonat -->
+  <Section
+    tone="muted"
+    eyebrow="Hét évszázad"
+    title="A templom és a falu története"
+    lead="A település első írásos említése 1303-ból, Bochard néven maradt fenn. A templom szentélye a XIV. századi gótikát őrzi."
+  >
+    <ol class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        highlights.map((item) => (
+          <li class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-7">
+            <p class="text-gold-600 font-serif text-lg">{item.year}</p>
+            <h3 class="mt-1 text-xl">{item.title}</h3>
+            <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">{item.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a
+        href="/tortenet"
+        class="bg-moss-800 text-sand-50 hover:bg-moss-900 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+      >
+        Teljes idővonal
+      </a>
+      <a
+        href="/templom"
+        class="border-moss-900/20 text-moss-900 hover:bg-moss-900/5 rounded-full border px-6 py-3 text-sm font-semibold transition-colors"
+      >
+        A templom értékei
+      </a>
+    </div>
+  </Section>
+
+  <!-- Aktualitás -->
+  <Section eyebrow="Aktualitás" title="Ami most történik nálunk">
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      <article class="reveal border-moss-900/10 rounded-2xl border p-7">
+        <h3 class="text-xl">Templomrestaurálás</h3>
+        <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">
+          A templom jelenleg restaurálás alatt áll. A munkálatok során előkerült a XVIII. században
+          boltozott kripta és az osszárium.
+        </p>
+      </article>
+      <article class="reveal border-moss-900/10 rounded-2xl border p-7">
+        <h3 class="text-xl">Herepei Károly emléktábla</h3>
+        <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">
+          2024 októberében avattuk fel a falu híres szülötte, Herepei Károly (1817–1906)
+          régész-geológus, a nagyenyedi Bethlen-kollégium professzorának emléktábláját.
+        </p>
+      </article>
+      <article class="reveal border-moss-900/10 rounded-2xl border p-7">
+        <h3 class="text-xl">Új lelkipásztor</h3>
+        <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">
+          Ugyanezen az ünnepségen iktatták be a gyülekezet új lelkipásztorát, Szabó Lászlót, aki
+          2024 óta szolgál Búzásbocsárdon.
+        </p>
+      </article>
+    </div>
+  </Section>
+
+  <!-- Meghívás -->
+  <section class="bg-moss-800 text-sand-50">
+    <div
+      class="container-page flex flex-col items-start gap-8 py-16 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <div>
+        <h2 class="text-3xl">Látogasson el hozzánk</h2>
+        <p class="text-sand-200/80 mt-3 max-w-xl">
+          Templomunk címe: {contact.churchAddress}. Csoportos látogatás vagy templomlátogatás
+          egyeztetése esetén kérjük, keresse a lelkipásztort.
+        </p>
+      </div>
+      <a
+        href={contact.mapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="bg-gold-400 text-moss-950 hover:bg-gold-300 rounded-full px-6 py-3 text-sm font-semibold whitespace-nowrap transition-colors"
+      >
+        Megnyitás térképen
+      </a>
+    </div>
+  </section>
+</BaseLayout>

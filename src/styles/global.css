@@ -1,0 +1,97 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/cormorant-garamond';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond Variable', ui-serif, Georgia, serif;
+
+  --color-moss-50: #f2f7f4;
+  --color-moss-100: #dfeae3;
+  --color-moss-200: #bfd6c8;
+  --color-moss-300: #93b8a3;
+  --color-moss-400: #64947c;
+  --color-moss-500: #457760;
+  --color-moss-600: #335e4c;
+  --color-moss-700: #29493c;
+  --color-moss-800: #1f382f;
+  --color-moss-900: #16281f;
+  --color-moss-950: #0c1712;
+
+  --color-gold-300: #e2c88f;
+  --color-gold-400: #d3b06a;
+  --color-gold-500: #b8924a;
+  --color-gold-600: #97733a;
+
+  --color-sand-50: #faf8f4;
+  --color-sand-100: #f3efe6;
+  --color-sand-200: #e7dfd0;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-sand-50 text-moss-900 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif font-semibold tracking-tight text-balance;
+  }
+
+  :focus-visible {
+    @apply outline-gold-500 outline-2 outline-offset-2;
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+@utility prose-church {
+  & p {
+    @apply text-moss-800/90 mb-5 leading-relaxed;
+  }
+
+  & p:last-child {
+    @apply mb-0;
+  }
+
+  & strong {
+    @apply text-moss-900 font-semibold;
+  }
+}
+
+/* Halk megjelenés görgetéskor, JS nélküli tartalék: alapból látható. */
+@layer components {
+  .reveal {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition:
+        opacity 0.7s ease-out,
+        transform 0.7s ease-out;
+    }
+
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

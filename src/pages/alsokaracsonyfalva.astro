@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { services } from '../data/site';
+
+const filialServices = services.filter((service) => service.place.includes('Alsókarácsonyfalva'));
+---
+
+<BaseLayout
+  title="Alsókarácsonyfalva"
+  description="Alsókarácsonyfalva a Búzásbocsárdi Református Egyházközség leányegyháza, ahol mintegy 60 református él. Temploma 1926-ban épült."
+>
+  <PageHero
+    eyebrow="Leányegyház"
+    title="Alsókarácsonyfalva"
+    lead="Búzásbocsárd leányegyháza, ahol mintegy 60 református él egy nagyszámú román lakosságú településen. A templom 1926-ban épült."
+  />
+
+  <Section>
+    <div class="prose-church max-w-3xl text-lg">
+      <p>
+        Alsókarácsonyfalva Búzásbocsárdtól mintegy 3 kilométerre található. A kis közösség
+        istentiszteleti életét a búzásbocsárdi lelkipásztor szolgálata tartja fenn: a leányegyház
+        templomában rendszeresen tartunk istentiszteletet, és itt is helyet kapnak a gyülekezeti
+        élet családi ünnepei – keresztelő, esketés, temetés.
+      </p>
+      <p>
+        A szórványhelyzetben élő közösség megmaradása a Fehér megyei reformátusság egyik legszebb
+        bizonyságtétele. Aki Alsókarácsonyfalván él vagy oda látogat, szeretettel várjuk az
+        alkalmainkon.
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="muted" eyebrow="Alkalmak" title="Istentisztelet Alsókarácsonyfalván">
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        filialServices.map((service) => (
+          <div class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-6">
+            <div class="flex items-baseline justify-between gap-4">
+              <p class="text-gold-600 text-sm font-semibold tracking-wide uppercase">
+                {service.day}
+              </p>
+              <p class="text-moss-900 font-serif text-2xl">{service.time}</p>
+            </div>
+            <p class="mt-3 font-serif text-xl">{service.title}</p>
+            <p class="text-moss-700/80 mt-1 text-sm">{service.note}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="text-moss-700/70 mt-8 text-sm">
+      Az ünnepi alkalmak időpontjáról a lelkipásztortól kérhet tájékoztatást.
+    </p>
+  </Section>
+</BaseLayout>

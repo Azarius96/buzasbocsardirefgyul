@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Az oldal nem található" description="A keresett oldal nem található.">
+  <section class="bg-moss-900 text-sand-50">
+    <div class="container-page flex min-h-[60vh] flex-col justify-center py-24">
+      <p class="text-gold-300 text-xs font-semibold tracking-[0.24em] uppercase">404</p>
+      <h1 class="mt-5 text-4xl sm:text-5xl">Ez az oldal nem található</h1>
+      <p class="text-sand-200/80 mt-6 max-w-xl text-lg">
+        Lehet, hogy elírás történt a címben, vagy az oldal már nem létezik. Térjen vissza a
+        kezdőlapra, ahol minden fontos tudnivaló megtalálható.
+      </p>
+      <a
+        href="/"
+        class="bg-gold-400 text-moss-950 hover:bg-gold-300 mt-10 inline-flex w-fit rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+      >
+        Vissza a kezdőlapra
+      </a>
+    </div>
+  </section>
+</BaseLayout>

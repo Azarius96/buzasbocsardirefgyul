@@ -1,0 +1,12 @@
+{
+  // Cloudflare Workers static assets alapú kiszolgálás: `npm run build && npx wrangler deploy`.
+  // Cloudflare Pages használata esetén erre a fájlra nincs szükség (build: `npm run build`, kimenet: `dist`).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "buzasbocsardiref",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash",
+  },
+}

@@ -1,0 +1,51 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  tone?: 'light' | 'muted' | 'dark';
+  class?: string;
+}
+
+const { id, eyebrow, title, lead, tone = 'light', class: className } = Astro.props;
+
+const tones = {
+  light: 'bg-sand-50 text-moss-900',
+  muted: 'bg-sand-100 text-moss-900',
+  dark: 'bg-moss-900 text-sand-50',
+} as const;
+---
+
+<section id={id} class:list={['py-16 sm:py-24', tones[tone], className]}>
+  <div class="container-page">
+    {
+      (eyebrow || title || lead) && (
+        <div class="reveal max-w-2xl">
+          {eyebrow && (
+            <p
+              class:list={[
+                'text-xs font-semibold tracking-[0.22em] uppercase',
+                tone === 'dark' ? 'text-gold-300' : 'text-gold-600',
+              ]}
+            >
+              {eyebrow}
+            </p>
+          )}
+          {title && <h2 class="mt-3 text-3xl sm:text-4xl">{title}</h2>}
+          {lead && (
+            <p
+              class:list={[
+                'mt-5 text-lg leading-relaxed',
+                tone === 'dark' ? 'text-sand-200/80' : 'text-moss-800/80',
+              ]}
+            >
+              {lead}
+            </p>
+          )}
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</section>

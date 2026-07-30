@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { ministers } from '../data/site';
+---
+
+<BaseLayout
+  title="Lelkészek"
+  description="A Búzásbocsárdi Református Egyházközség lelkipásztorai 1773-tól napjainkig, K. Benedek Sámueltől Szabó Lászlóig."
+>
+  <PageHero
+    eyebrow="1773 – napjaink"
+    title="Gyülekezetünk lelkipásztorai"
+    lead="Két és fél évszázad szolgálattevői, akiknek munkája nyomán a búzásbocsárdi reformátusság megmaradt és épült."
+  />
+
+  <Section>
+    <ol class="divide-moss-900/10 divide-y">
+      {
+        ministers.map((minister) => (
+          <li
+            class:list={[
+              'reveal flex flex-wrap items-baseline justify-between gap-3 py-5',
+              'current' in minister && minister.current && 'bg-sand-100 rounded-2xl px-5',
+            ]}
+          >
+            <span class="text-moss-900 font-serif text-2xl">
+              {minister.name}
+              {'current' in minister && minister.current && (
+                <span class="bg-moss-800 text-sand-50 ml-3 rounded-full px-3 py-1 align-middle font-sans text-xs font-semibold tracking-wide uppercase">
+                  Jelenleg
+                </span>
+              )}
+            </span>
+            <span class="text-gold-600 text-sm font-semibold tracking-[0.14em] uppercase">
+              {minister.period}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+</BaseLayout>

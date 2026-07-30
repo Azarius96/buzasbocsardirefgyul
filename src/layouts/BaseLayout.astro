@@ -1,0 +1,112 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, contact } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** OG kép elérési útja a gyökérhez képest. */
+  image?: string;
+}
+
+const { title, description = site.description, image = '/og.svg' } = Astro.props;
+
+const pageTitle = title ? `${title} – ${site.name}` : `${site.name} – ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Church',
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  email: contact.parishEmail,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.street,
+    addressLocality: contact.city,
+    postalCode: contact.postalCode,
+    addressRegion: 'Alba',
+    addressCountry: 'RO',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: contact.coordinates.lat,
+    longitude: contact.coordinates.lon,
+  },
+  employee: {
+    '@type': 'Person',
+    name: contact.minister,
+    jobTitle: contact.ministerTitle,
+  },
+  memberOf: {
+    '@type': 'Organization',
+    name: site.diocese,
+    url: site.dioceseUrl,
+  },
+};
+---
+
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#1f382f" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="hu_HU" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#tartalom"
+      class="focus:bg-moss-900 focus:text-sand-50 sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:px-4 focus:py-2 focus:text-sm"
+    >
+      Ugrás a tartalomra
+    </a>
+    <Header />
+    <main id="tartalom" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      document.documentElement.classList.add('js');
+
+      const revealed = document.querySelectorAll<HTMLElement>('.reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        revealed.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+        );
+        revealed.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

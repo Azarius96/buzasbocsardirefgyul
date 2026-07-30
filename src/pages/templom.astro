@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import ChurchArt from '../components/ChurchArt.astro';
+import { contact } from '../data/site';
+
+const treasures = [
+  {
+    title: 'A középkori harang',
+    body: 'A templom megénekelt értéke az a 800–900 kg-os harang, amely 1450 körül készülhetett Nagyszebenben. Felirata: „O rex glorie veni nobis cum pace”.',
+  },
+  {
+    title: 'Kőszószék, 1657',
+    body: 'A míves, 1657-es évszámmal ellátott kőszószék a reformáció emléke, a befalazott, faragott sekrestyebejárattal együtt.',
+  },
+  {
+    title: 'Gótikus szentély',
+    body: 'A gótika jelei – résablakok a szentélyben, diadalív, támpillérek, bevakolt bordázatok – ma már csak a szentélyben látszanak.',
+  },
+  {
+    title: 'Zsindelyes fatorony',
+    body: 'A 25 méter magas, fatornácos, zsindelyes torony tipikus erdélyi fatorony.',
+  },
+  {
+    title: 'Orgona, 1878–79',
+    body: 'A templom orgonáját Kollonics István készítette 1878–79-ben.',
+  },
+  {
+    title: 'Hősi emléktábla',
+    body: 'A templombelsőben az első világháborúban elesett hősök magyarigeni kőből készült emléktáblája található.',
+  },
+];
+---
+
+<BaseLayout
+  title="A templom"
+  description="A búzásbocsárdi református templom: gótikus szentély, 1657-es kőszószék, 1450 körüli nagyszebeni harang, 25 méteres zsindelyes fatorony, Kollonics-orgona."
+>
+  <PageHero
+    eyebrow="Műemlék · AB-II-m-B-00194"
+    title="A búzásbocsárdi református templom"
+    lead="A jelenlegi – és az eredeti – templom is a település központjában, egy magaslaton áll. A hajót diadalív választja el a szentélytől, amely a XIV. századi gótikát őrzi."
+  />
+
+  <Section>
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.8fr]">
+      <div class="prose-church text-lg">
+        <p>
+          A hajó későbbi korok építménye, vagy az 1866-ban történt alapos átépítés eredménye. A
+          reformációra való áttérés minden bizonnyal a XVI. század második felében történt: erre ma
+          két dolog emlékeztet, a templomon belül elhelyezkedő befalazott, faragott
+          sekrestyebejárat, valamint az <strong>1657-es évszámmal ellátott míves kőszószék</strong>.
+        </p>
+        <p>
+          A templom új, fatornácos parókiája 1900-ban készült el. Az épület jelenleg restaurálás
+          alatt van, amelynek során előkerült a XVIII. században boltozott kripta és az osszárium.
+        </p>
+      </div>
+      <ChurchArt class="text-moss-700/70 mx-auto w-full max-w-xs lg:max-w-sm" />
+    </div>
+  </Section>
+
+  <Section tone="muted" eyebrow="Értékeink" title="Amit a templom őriz">
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        treasures.map((item) => (
+          <article class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-7">
+            <h3 class="text-xl">{item.title}</h3>
+            <p class="text-moss-800/85 mt-3 text-sm leading-relaxed">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section tone="dark" eyebrow="Adatok" title="A műemlék adatlapja">
+    <dl class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="reveal">
+        <dt class="text-gold-300 text-xs font-semibold tracking-[0.18em] uppercase">
+          Műemlékjegyzék kód
+        </dt>
+        <dd class="mt-2 font-serif text-2xl">{contact.monumentCode}</dd>
+      </div>
+      <div class="reveal">
+        <dt class="text-gold-300 text-xs font-semibold tracking-[0.18em] uppercase">Datálás</dt>
+        <dd class="mt-2 font-serif text-2xl">XVI. század</dd>
+        <p class="text-sand-200/70 text-sm">bővítve a XVIII. században és 1868-ban</p>
+      </div>
+      <div class="reveal">
+        <dt class="text-gold-300 text-xs font-semibold tracking-[0.18em] uppercase">Cím</dt>
+        <dd class="mt-2 text-lg">{contact.churchAddress}</dd>
+      </div>
+      <div class="reveal">
+        <dt class="text-gold-300 text-xs font-semibold tracking-[0.18em] uppercase">Koordináták</dt>
+        <dd class="mt-2 text-lg">
+          46° 11′ 30″ N, 23° 50′ 25″ E
+          <span class="text-sand-200/70 block text-sm">289 m tengerszint feletti magasság</span>
+        </dd>
+      </div>
+    </dl>
+    <a
+      href={contact.mapUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="bg-gold-400 text-moss-950 hover:bg-gold-300 mt-10 inline-flex rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+    >
+      Megnyitás térképen
+    </a>
+  </Section>
+</BaseLayout>
