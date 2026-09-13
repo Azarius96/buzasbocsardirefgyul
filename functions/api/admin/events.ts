@@ -1,8 +1,16 @@
-import { isAuthorized, loadEvents, saveEvents, MAX_PHOTOS_PER_EVENT, MAX_PHOTO_BYTES, type ChurchEvent, type EventPhoto } from "../../_lib/events";
+import {
+  isAuthorized,
+  loadEvents,
+  saveEvents,
+  photoKey,
+  MAX_PHOTOS_PER_EVENT,
+  MAX_PHOTO_BYTES,
+  type ChurchEvent,
+  type EventPhoto,
+} from "../../_lib/events";
 
 interface Env {
   EVENTS_KV: KVNamespace;
-  EVENT_PHOTOS: R2Bucket;
   ADMIN_TOKEN: string;
 }
 
@@ -39,10 +47,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const eventId = crypto.randomUUID();
   const photos: EventPhoto[] = [];
   for (const file of files) {
-    const key = `events/${eventId}/${crypto.randomUUID()}`;
-    await env.EVENT_PHOTOS.put(key, await file.arrayBuffer(), {
-      httpMetadata: { contentType: file.type },
-    });
+    const photoId = crypto.randomUUID();
+    const key = photoKey(eventId, photoId);
+    await env.EVENTS_KV.put(key, await file.arrayBuffer(), { metadata: { contentType: file.type } });
     photos.push({ key, contentType: file.type });
   }
 

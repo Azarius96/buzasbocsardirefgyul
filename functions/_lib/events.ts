@@ -13,8 +13,15 @@ export interface ChurchEvent {
 }
 
 const EVENTS_KEY = "events";
-export const MAX_PHOTOS_PER_EVENT = 12;
-export const MAX_PHOTO_BYTES = 8 * 1024 * 1024;
+export const MAX_PHOTOS_PER_EVENT = 10;
+// A Workers KV ingyenes csomag ~1 GB összes tárhelyet biztosít fizetési mód megadása nélkül
+// (szemben az R2-vel, ami már az ingyenes szinten is előfizetést/kártyát kér) - ezért a fotónkénti
+// méretkorlát itt szigorúbb, hogy évekre elég legyen a tárhely.
+export const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+
+export function photoKey(eventId: string, photoId: string): string {
+  return `photo:${eventId}:${photoId}`;
+}
 
 export async function loadEvents(kv: KVNamespace): Promise<ChurchEvent[]> {
   const raw = await kv.get(EVENTS_KEY);

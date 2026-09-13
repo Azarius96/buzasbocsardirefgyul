@@ -2,7 +2,6 @@ import { isAuthorized, loadEvents, saveEvents } from "../../../_lib/events";
 
 interface Env {
   EVENTS_KV: KVNamespace;
-  EVENT_PHOTOS: R2Bucket;
   ADMIN_TOKEN: string;
 }
 
@@ -18,7 +17,7 @@ export const onRequestDelete: PagesFunction<Env> = async ({ request, env, params
     return new Response("Nem található", { status: 404 });
   }
 
-  await Promise.all(event.photos.map((photo) => env.EVENT_PHOTOS.delete(photo.key)));
+  await Promise.all(event.photos.map((photo) => env.EVENTS_KV.delete(photo.key)));
   await saveEvents(
     env.EVENTS_KV,
     events.filter((e) => e.id !== id),
