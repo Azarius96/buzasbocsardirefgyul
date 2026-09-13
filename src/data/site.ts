@@ -68,7 +68,6 @@ export const facts = [
   { value: '1303', label: 'Az első írásos említés', detail: 'Bochard néven' },
   { value: 'XIV. sz.', label: 'A templom szentélye', detail: 'gótikus eredet' },
   { value: '25 m', label: 'Zsindelyes fatorony', detail: 'tipikus erdélyi fatorony' },
-  { value: '600', label: 'Gyülekezeti tag', detail: 'Búzásbocsárdon és a leányegyházban' },
 ] as const;
 
 export const timeline = [
@@ -125,7 +124,7 @@ export const timeline = [
   {
     year: '1926',
     title: 'Alsókarácsonyfalva temploma',
-    body: 'Felépül a leányegyház temploma, ahol ma mintegy 60 református él egy nagyszámú román lakosságú településen.',
+    body: 'Felépül a leányegyház temploma, ahol ma mintegy 52 református él egy nagyszámú román lakosságú településen.',
   },
   {
     year: 'napjaink',
@@ -152,6 +151,21 @@ export const ministers = [
   { period: '2008–2015', name: 'Boros László' },
   { period: '2016–2024', name: 'Kötő Ferencz Barna' },
   { period: '2024–', name: 'Szabó László', current: true },
+] as const;
+
+export const supporters = [
+  {
+    name: 'Consiliul Județean Alba',
+    logo: '/tamogatok/consiliul-judetean-alba.jpg',
+  },
+  {
+    name: 'RMDSZ – Communitas Alapítvány',
+    logo: '/tamogatok/communitas-rmdsz.png',
+  },
+  {
+    name: 'Magyarország Kormánya – Miniszterelnökség Nemzetpolitikai Államtitkárság, Bethlen Gábor Alap',
+    logo: '/tamogatok/magyar-kormany-tamogatas.jpg',
+  },
 ] as const;
 
 export const nav = [

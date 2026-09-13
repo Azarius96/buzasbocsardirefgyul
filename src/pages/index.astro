@@ -3,9 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ChurchArt from '../components/ChurchArt.astro';
 import LiveStats from '../components/LiveStats.astro';
-import { contact, facts, ministers, services, site, timeline } from '../data/site';
+import { contact, facts, ministers, services, site, supporters, timeline } from '../data/site';
 
-const historicalFacts = facts.filter((f) => f.label !== 'Gyülekezeti tag');
 const highlights = timeline.slice(0, 4);
 const currentMinister = ministers.find((m) => 'current' in m && m.current);
 ---
@@ -56,7 +55,7 @@ const currentMinister = ministers.find((m) => 'current' in m && m.current);
   <section class="border-moss-900/10 bg-sand-100 border-b">
     <div class="container-page grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4">
       {
-        historicalFacts.map((fact) => (
+        facts.map((fact) => (
           <div class="reveal">
             <p class="text-moss-800 font-serif text-4xl">{fact.value}</p>
             <p class="text-moss-900 mt-2 text-sm font-semibold">{fact.label}</p>
@@ -80,7 +79,7 @@ const currentMinister = ministers.find((m) => 'current' in m && m.current);
           Nagyenyedtől Balázsfalváig jelzik a reformátusság Fehér megyei jelenlétét.
         </p>
         <p>
-          A gyülekezetben ma <strong>600-an</strong> vagyunk, a leányegyházunk Alsókarácsonyfalva. Legyen
+          A gyülekezetben ma <strong>438-an</strong> vagyunk, a leányegyházunk Alsókarácsonyfalva. Legyen
           szó vasárnapi istentiszteletről, keresztelőről, esküvőről vagy éppen a templom történetéről
           – szeretettel várjuk, és állunk rendelkezésére.
         </p>
@@ -210,6 +209,27 @@ const currentMinister = ministers.find((m) => 'current' in m && m.current);
           2024 óta szolgál Búzásbocsárdon.
         </p>
       </article>
+    </div>
+  </Section>
+
+  <!-- Támogatóink -->
+  <Section
+    tone="muted"
+    eyebrow="Köszönjük"
+    title="Támogatóink"
+    lead="A templom felújítását és gyülekezetünk életét az alábbi szervezetek támogatása teszi lehetővé."
+  >
+    <div class="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-3">
+      {
+        supporters.map((supporter) => (
+          <img
+            src={supporter.logo}
+            alt={supporter.name}
+            class="reveal mx-auto h-20 w-auto object-contain"
+            loading="lazy"
+          />
+        ))
+      }
     </div>
   </Section>
 
