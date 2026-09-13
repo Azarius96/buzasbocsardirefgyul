@@ -43,7 +43,7 @@ export const services = [
   },
   {
     day: 'Vasárnap',
-    time: '13:00',
+    time: '9:30',
     title: 'Istentisztelet',
     place: 'Alsókarácsonyfalva, leányegyház temploma',
     note: 'A leányegyház gyülekezetének istentisztelete.',
