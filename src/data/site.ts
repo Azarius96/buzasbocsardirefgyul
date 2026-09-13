@@ -155,14 +155,17 @@ export const ministers = [
 
 export const supporters = [
   {
+    shortName: 'Consiliul Județean Alba',
     name: 'Consiliul Județean Alba',
     logo: '/tamogatok/consiliul-judetean-alba.jpg',
   },
   {
+    shortName: 'Communitas Alapítvány',
     name: 'RMDSZ – Communitas Alapítvány',
     logo: '/tamogatok/communitas-rmdsz.png',
   },
   {
+    shortName: 'Bethlen Gábor Alap',
     name: 'Magyarország Kormánya – Miniszterelnökség Nemzetpolitikai Államtitkárság, Bethlen Gábor Alap',
     logo: '/tamogatok/magyar-kormany-tamogatas.jpg',
   },

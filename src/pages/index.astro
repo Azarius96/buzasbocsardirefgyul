@@ -225,17 +225,15 @@ const currentMinister = ministers.find((m) => 'current' in m && m.current);
     tone="muted"
     eyebrow="Köszönjük"
     title="Támogatóink"
-    lead="A templom felújítását és gyülekezetünk életét az alábbi szervezetek támogatása teszi lehetővé."
+    lead="Köszönjük a Consiliul Județean Alba, a Communitas Alapítvány és a Bethlen Gábor Alap támogatását, amely a templom felújítását és gyülekezetünk életét teszi lehetővé."
   >
-    <div class="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-3">
+    <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
       {
         supporters.map((supporter) => (
-          <img
-            src={supporter.logo}
-            alt={supporter.name}
-            class="reveal mx-auto h-20 w-auto object-contain"
-            loading="lazy"
-          />
+          <div class="reveal flex flex-col items-center gap-3 text-center">
+            <img src={supporter.logo} alt={supporter.name} class="h-20 w-auto object-contain" loading="lazy" />
+            <p class="text-moss-800 text-sm font-semibold">{supporter.shortName}</p>
+          </div>
         ))
       }
     </div>
