@@ -1,0 +1,107 @@
+---
+import { STATS_API_URL } from '../lib/publicApi';
+
+const villages = [
+  { slug: 'buzasbocsard', name: 'Búzásbocsárd' },
+  { slug: 'alsokaracsonyfalva', name: 'Alsókarácsonyfalva' },
+] as const;
+---
+
+<div class="mt-10 grid gap-6 sm:grid-cols-2">
+  {
+    villages.map((v) => (
+      <div class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-7" data-cong={v.slug}>
+        <h3 class="text-xl">{v.name}</h3>
+        <div class="mt-5 flex items-center gap-6">
+          <div
+            data-donut
+            style="width:120px;height:120px;border-radius:50%;flex-shrink:0;position:relative;background:var(--color-moss-100);"
+          >
+            <div
+              style="position:absolute;inset:16px;border-radius:50%;background:var(--color-sand-50);display:flex;flex-direction:column;align-items:center;justify-content:center;"
+            >
+              <span data-stat="tagletszam" class="font-serif text-2xl">
+                –
+              </span>
+              <span class="text-moss-700/70 text-xs">tag</span>
+            </div>
+          </div>
+          <ul data-legend class="flex-1 space-y-1.5 text-sm" />
+        </div>
+        <p class="text-moss-800/85 mt-5 text-sm">
+          Elhunyt <span data-stat="ev">ebben az évben</span>: <strong data-stat="elhunytak">–</strong>
+        </p>
+        <p data-no-age class="text-moss-700/60 mt-2 hidden text-xs">
+          Nincs elég adat a kor szerinti bontáshoz.
+        </p>
+      </div>
+    ))
+  }
+</div>
+
+<script is:inline define:vars={{ STATS_API_URL }}>
+  const AGE_COLORS = [
+    'var(--color-moss-200)',
+    'var(--color-moss-400)',
+    'var(--color-moss-600)',
+    'var(--color-moss-800)',
+    'var(--color-gold-600)',
+  ];
+
+  fetch(STATS_API_URL)
+    .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+    .then((data) => {
+      const ev = typeof data.ev === 'number' ? `${data.ev}-ban` : 'ebben az évben';
+      for (const g of data.gyulekezetek ?? []) {
+        const card = document.querySelector(`[data-cong="${g.slug}"]`);
+        if (!card) continue;
+
+        const tagletszamEl = card.querySelector('[data-stat="tagletszam"]');
+        const elhunytakEl = card.querySelector('[data-stat="elhunytak"]');
+        const evEl = card.querySelector('[data-stat="ev"]');
+        if (tagletszamEl) tagletszamEl.textContent = String(g.tagletszam);
+        if (elhunytakEl) elhunytakEl.textContent = String(g.elhunytakEbbenAzEvben);
+        if (evEl) evEl.textContent = ev;
+
+        const buckets = g.korEloszlas ?? [];
+        const total = buckets.reduce((sum, b) => sum + b.count, 0);
+        const donut = card.querySelector('[data-donut]');
+        const legend = card.querySelector('[data-legend]');
+        const noAge = card.querySelector('[data-no-age]');
+
+        if (total === 0) {
+          noAge?.classList.remove('hidden');
+          continue;
+        }
+
+        let acc = 0;
+        const stops = buckets
+          .map((b, i) => {
+            const from = (acc / total) * 100;
+            acc += b.count;
+            const to = (acc / total) * 100;
+            return `${AGE_COLORS[i % AGE_COLORS.length]} ${from}% ${to}%`;
+          })
+          .join(', ');
+        if (donut) donut.style.background = `conic-gradient(${stops})`;
+
+        if (legend) {
+          legend.innerHTML = buckets
+            .map((b, i) => {
+              const pct = total > 0 ? Math.round((b.count / total) * 100) : 0;
+              return `<li style="display:flex;align-items:center;gap:8px;justify-content:space-between;">
+                <span style="display:flex;align-items:center;gap:8px;">
+                  <span style="width:10px;height:10px;border-radius:50%;background:${AGE_COLORS[i % AGE_COLORS.length]};display:inline-block;"></span>
+                  ${b.label}
+                </span>
+                <strong>${b.count} <span style="font-weight:400;color:var(--color-moss-700);opacity:.7;">(${pct}%)</span></strong>
+              </li>`;
+            })
+            .join('');
+        }
+      }
+    })
+    .catch(() => {
+      document.querySelectorAll('[data-no-age]').forEach((el) => el.classList.remove('hidden'));
+    });
+</script>

@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ChurchArt from '../components/ChurchArt.astro';
-import LiveStats from '../components/LiveStats.astro';
+import CongregationStats from '../components/CongregationStats.astro';
 import { contact, facts, ministers, services, site, supporters, timeline } from '../data/site';
 
 const highlights = timeline.slice(0, 4);
@@ -63,9 +63,17 @@ const currentMinister = ministers.find((m) => 'current' in m && m.current);
           </div>
         ))
       }
-      <LiveStats />
     </div>
   </section>
+
+  <!-- Gyülekezetünk ma -->
+  <Section
+    eyebrow="Ma"
+    title="Gyülekezetünk ma"
+    lead="Élő taglétszám és kor szerinti megoszlás, Búzásbocsárdon és Alsókarácsonyfalván külön-külön."
+  >
+    <CongregationStats />
+  </Section>
 
   <!-- Köszöntés -->
   <Section eyebrow="Köszöntjük" title="Isten hozta a gyülekezetünk honlapján!">
