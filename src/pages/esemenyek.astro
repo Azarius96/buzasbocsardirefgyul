@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+---
+
+<BaseLayout
+  title="Események"
+  description="Gyülekezeti események fényképekkel a Búzásbocsárdi Református Egyházközségtől és Alsókarácsonyfalváról."
+>
+  <PageHero
+    eyebrow="Megosztjuk"
+    title="Események és fényképek"
+    lead="Alkalmaink, ünnepeink és közösségi eseményeink képekben."
+  />
+
+  <Section>
+    <p id="events-empty" class="text-moss-700/70 hidden text-center">
+      Egyelőre nincs közzétett esemény.
+    </p>
+    <div id="events-list" class="mt-4 grid gap-10"></div>
+  </Section>
+</BaseLayout>
+
+<script>
+  interface EventPhoto {
+    key: string;
+  }
+  interface ChurchEvent {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+    photos: EventPhoto[];
+  }
+
+  function escapeHtml(s: string): string {
+    return s.replace(
+      /[&<>"']/g,
+      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
+    );
+  }
+
+  function formatDate(iso: string): string {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderEvent(ev: ChurchEvent): string {
+    const photos = ev.photos
+      .map(
+        (p) =>
+          `<a href="/photos/${p.key}" target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-xl">
+            <img src="/photos/${p.key}" loading="lazy" alt="${escapeHtml(ev.title)}" class="aspect-square h-full w-full object-cover transition-transform hover:scale-105" />
+          </a>`,
+      )
+      .join('');
+
+    return `<article class="reveal border-moss-900/10 bg-sand-50 rounded-2xl border p-7">
+      <p class="text-gold-600 font-serif text-lg">${formatDate(ev.date)}</p>
+      <h3 class="mt-1 text-2xl">${escapeHtml(ev.title)}</h3>
+      ${ev.description ? `<p class="text-moss-800/85 mt-3 text-sm leading-relaxed">${escapeHtml(ev.description)}</p>` : ''}
+      ${photos ? `<div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">${photos}</div>` : ''}
+    </article>`;
+  }
+
+  fetch('/api/events')
+    .then((res) => (res.ok ? (res.json() as Promise<ChurchEvent[]>) : Promise.reject(res.status)))
+    .then((events) => {
+      const list = document.getElementById('events-list');
+      const empty = document.getElementById('events-empty');
+      if (!list) return;
+      if (events.length === 0) {
+        empty?.classList.remove('hidden');
+        return;
+      }
+      list.innerHTML = events.map(renderEvent).join('');
+    })
+    .catch(() => {
+      document.getElementById('events-empty')?.classList.remove('hidden');
+    });
+</script>

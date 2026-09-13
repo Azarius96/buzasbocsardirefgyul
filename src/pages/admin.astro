@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+---
+
+<BaseLayout title="Adminisztráció">
+  <PageHero eyebrow="Csak lelkészi/gondnoki használatra" title="Események kezelése" />
+
+  <Section>
+    <div id="login-box" class="mx-auto max-w-sm">
+      <label class="text-moss-900 block text-sm font-semibold" for="token-input">Jelszó</label>
+      <input
+        id="token-input"
+        type="password"
+        class="border-moss-900/20 mt-2 w-full rounded-lg border px-3 py-2"
+        autocomplete="current-password"
+      />
+      <button
+        id="login-btn"
+        class="bg-moss-800 text-sand-50 hover:bg-moss-900 mt-4 rounded-full px-6 py-3 text-sm font-semibold"
+      >
+        Belépés
+      </button>
+      <p id="login-error" class="text-sm text-red-700 mt-3 hidden">Hibás jelszó.</p>
+    </div>
+
+    <div id="admin-box" class="hidden">
+      <form id="event-form" class="border-moss-900/10 max-w-xl rounded-2xl border p-7">
+        <h3 class="text-xl">Új esemény</h3>
+        <label class="text-moss-900 mt-5 block text-sm font-semibold" for="title">Cím</label>
+        <input id="title" name="title" required class="border-moss-900/20 mt-1 w-full rounded-lg border px-3 py-2" />
+
+        <label class="text-moss-900 mt-4 block text-sm font-semibold" for="date">Dátum</label>
+        <input
+          id="date"
+          name="date"
+          type="date"
+          required
+          class="border-moss-900/20 mt-1 w-full rounded-lg border px-3 py-2"
+        />
+
+        <label class="text-moss-900 mt-4 block text-sm font-semibold" for="description">Leírás</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="3"
+          class="border-moss-900/20 mt-1 w-full rounded-lg border px-3 py-2"></textarea>
+
+        <label class="text-moss-900 mt-4 block text-sm font-semibold" for="photos">Fényképek</label>
+        <input
+          id="photos"
+          name="photos"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
+          class="mt-1 w-full text-sm"
+        />
+        <p class="text-moss-700/70 mt-1 text-xs">Legfeljebb 12 fénykép, egyenként max. 8 MB.</p>
+
+        <button
+          type="submit"
+          class="bg-gold-400 text-moss-950 hover:bg-gold-300 mt-6 rounded-full px-6 py-3 text-sm font-semibold"
+        >
+          Közzététel
+        </button>
+        <p id="form-status" class="mt-3 text-sm"></p>
+      </form>
+
+      <div id="events-admin-list" class="mt-10 grid gap-4"></div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  const TOKEN_KEY = 'admin-token';
+
+  function getToken(): string | null {
+    return sessionStorage.getItem(TOKEN_KEY);
+  }
+
+  function showAdmin() {
+    document.getElementById('login-box')?.classList.add('hidden');
+    document.getElementById('admin-box')?.classList.remove('hidden');
+    loadEvents();
+  }
+
+  async function tryToken(token: string): Promise<boolean> {
+    const res = await fetch('/api/admin/events', { headers: { Authorization: `Bearer ${token}` } });
+    return res.ok;
+  }
+
+  interface ChurchEvent {
+    id: string;
+    title: string;
+    date: string;
+  }
+
+  function escapeHtml(s: string): string {
+    return s.replace(
+      /[&<>"']/g,
+      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
+    );
+  }
+
+  async function loadEvents() {
+    const token = getToken();
+    if (!token) return;
+    const res = await fetch('/api/admin/events', { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) return;
+    const events: ChurchEvent[] = await res.json();
+    const list = document.getElementById('events-admin-list');
+    if (!list) return;
+    list.innerHTML = events
+      .map(
+        (ev) =>
+          `<div class="border-moss-900/10 flex items-center justify-between rounded-xl border p-4">
+            <span>${ev.date} – ${escapeHtml(ev.title)}</span>
+            <button data-delete="${ev.id}" class="text-sm font-semibold text-red-700">Törlés</button>
+          </div>`,
+      )
+      .join('');
+    list.querySelectorAll<HTMLButtonElement>('[data-delete]').forEach((btn) => {
+      btn.addEventListener('click', () => deleteEvent(btn.dataset.delete!));
+    });
+  }
+
+  async function deleteEvent(id: string) {
+    const token = getToken();
+    if (!token || !confirm('Biztosan törlöd ezt az eseményt (a fényképekkel együtt)?')) return;
+    await fetch(`/api/admin/events/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+    loadEvents();
+  }
+
+  document.getElementById('login-btn')?.addEventListener('click', async () => {
+    const input = document.getElementById('token-input') as HTMLInputElement;
+    const ok = await tryToken(input.value);
+    if (ok) {
+      sessionStorage.setItem(TOKEN_KEY, input.value);
+      showAdmin();
+    } else {
+      document.getElementById('login-error')?.classList.remove('hidden');
+    }
+  });
+
+  document.getElementById('event-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const token = getToken();
+    if (!token) return;
+    const form = e.target as HTMLFormElement;
+    const status = document.getElementById('form-status')!;
+    status.textContent = 'Feltöltés...';
+    try {
+      const res = await fetch('/api/admin/events', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: new FormData(form),
+      });
+      if (!res.ok) {
+        status.textContent = await res.text();
+        status.className = 'mt-3 text-sm text-red-700';
+        return;
+      }
+      form.reset();
+      status.textContent = 'Közzétéve.';
+      status.className = 'mt-3 text-sm text-moss-800';
+      loadEvents();
+    } catch {
+      status.textContent = 'Hiba történt a feltöltés közben.';
+      status.className = 'mt-3 text-sm text-red-700';
+    }
+  });
+
+  if (getToken()) {
+    tryToken(getToken()!).then((ok) => {
+      if (ok) showAdmin();
+      else sessionStorage.removeItem(TOKEN_KEY);
+    });
+  }
+</script>

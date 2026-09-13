@@ -161,5 +161,6 @@ export const nav = [
   { href: '/lelkeszek', label: 'Lelkészek' },
   { href: '/alsokaracsonyfalva', label: 'Alsókarácsonyfalva' },
   { href: '/istentiszteletek', label: 'Gyülekezeti élet' },
+  { href: '/esemenyek', label: 'Események' },
   { href: '/kapcsolat', label: 'Kapcsolat' },
 ] as const;
