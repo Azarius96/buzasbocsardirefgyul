@@ -15,18 +15,14 @@ wrangler.jsonc          Cloudflare-konfiguráció
 
 ## Közzététel Cloudflare-en
 
-**A) Parancssorból (Wrangler):**
+Az oldal a **buzasbocsardirefgyul** Cloudflare Pages projektben fut: https://buzasbocsardirefgyul.pages.dev
 
 ```bash
-npx wrangler login
-npx wrangler deploy
+npx wrangler pages deploy
 ```
 
-Az oldal ezután a `https://buzasbocsard-reformatus.<fiók>.workers.dev` címen érhető el;
-saját domain a Cloudflare irányítópulton (Workers & Pages → a projekt → Settings → Domains) adható hozzá.
-
-**B) Git-tárolóból (GitHub → Cloudflare):** töltsd fel a mappát egy GitHub-tárolóba, majd a Cloudflare
-irányítópulton: *Workers & Pages → Create → Import a repository*. Build parancs: nincs; kimeneti mappa: `public`.
+(Első alkalommal előtte: `npx wrangler login`.) Saját domain: Cloudflare irányítópult → Workers & Pages →
+buzasbocsardirefgyul → Custom domains.
 
 ## Facebook
 
@@ -67,15 +63,15 @@ python3 -m http.server 8787 -d public
 - Minden oldalon: canonical link, Open Graph, schema.org JSON-LD (Organization + két Church, istentiszteleti időpontokkal)
 - `public/<kulcs>.txt` – IndexNow-kulcs (Bing, Yandex, Seznam, Naver azonnali értesítése)
 
-**Ha saját domainre költözik az oldal**, a régi címet (`buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev`)
+**Ha saját domainre költözik az oldal**, a régi címet (`buzasbocsardirefgyul.pages.dev`)
 mindenhol cserélni kell az újra:
 
 ```bash
-grep -rl "szabo-laszlo-lorand.workers.dev" public | xargs sed -i '' 's#buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev#UJ-DOMAIN.ro#g'
+grep -rl "buzasbocsardirefgyul.pages.dev" public | xargs sed -i '' 's#buzasbocsardirefgyul.pages.dev#UJ-DOMAIN.ro#g'
 ```
 
 Tartalom módosítása után (deploy után) a keresők értesítése IndexNow-val:
 
 ```bash
-curl -X POST https://api.indexnow.org/indexnow -H "Content-Type: application/json" -d '{"host":"buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev","key":"f5a751f81e5c72ed4148dc3b71bb60eb","urlList":["https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/"]}'
+curl -X POST https://api.indexnow.org/indexnow -H "Content-Type: application/json" -d '{"host":"buzasbocsardirefgyul.pages.dev","key":"f5a751f81e5c72ed4148dc3b71bb60eb","urlList":["https://buzasbocsardirefgyul.pages.dev/"]}'
 ```

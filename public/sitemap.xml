@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/</loc>
+    <loc>https://buzasbocsardirefgyul.pages.dev/</loc>
     <lastmod>2026-10-04</lastmod>
-    <image:image><image:loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/assets/img/bocsard-templom-2.jpg</image:loc></image:image>
+    <image:image><image:loc>https://buzasbocsardirefgyul.pages.dev/assets/img/bocsard-templom-2.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/bocsard</loc>
+    <loc>https://buzasbocsardirefgyul.pages.dev/bocsard</loc>
     <lastmod>2026-10-04</lastmod>
-    <image:image><image:loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/assets/img/bocsard-templom-4.jpg</image:loc></image:image>
+    <image:image><image:loc>https://buzasbocsardirefgyul.pages.dev/assets/img/bocsard-templom-4.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/karacsonyfalva</loc>
+    <loc>https://buzasbocsardirefgyul.pages.dev/karacsonyfalva</loc>
     <lastmod>2026-10-04</lastmod>
-    <image:image><image:loc>https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/assets/img/karacsonyfalva-templom.jpg</image:loc></image:image>
+    <image:image><image:loc>https://buzasbocsardirefgyul.pages.dev/assets/img/karacsonyfalva-templom.jpg</image:loc></image:image>
   </url>
 </urlset>

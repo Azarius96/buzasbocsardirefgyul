@@ -26,9 +26,9 @@
 
 ## Oldalak
 
-- [Kezdőlap](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/): alkalmak, hitvallás, támogatók, kapcsolat
-- [Búzásbocsárd](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/bocsard): a falu és a templom története, lelkipásztorok névsora 1773-tól
-- [Alsókarácsonyfalva](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/karacsonyfalva): a falu és a leányegyházközség története
+- [Kezdőlap](https://buzasbocsardirefgyul.pages.dev/): alkalmak, hitvallás, támogatók, kapcsolat
+- [Búzásbocsárd](https://buzasbocsardirefgyul.pages.dev/bocsard): a falu és a templom története, lelkipásztorok névsora 1773-tól
+- [Alsókarácsonyfalva](https://buzasbocsardirefgyul.pages.dev/karacsonyfalva): a falu és a leányegyházközség története
 
 ## Támogatók
 

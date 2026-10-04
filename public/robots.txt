@@ -33,4 +33,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/sitemap.xml
+Sitemap: https://buzasbocsardirefgyul.pages.dev/sitemap.xml
