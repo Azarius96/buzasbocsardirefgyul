@@ -1,0 +1,35 @@
+# Búzásbocsárdi Református Egyházközség
+
+> A Búzásbocsárdi Református Egyházközség (románul: Parohia Reformată Bucerdea Grânoasă) magyar református gyülekezet Búzásbocsárdon (Bucerdea Grânoasă, Fehér/Alba megye, Románia), az Erdélyi Református Egyházkerület Nagyenyedi Református Egyházmegyéjében. Leányegyházközsége az alsókarácsonyfalvi (Crăciunelu de Jos) református gyülekezet.
+
+## Alapadatok
+
+- Lelkipásztor: Szabó László-Loránd, parókus lelkipásztor (beiktatva 2024. október 6.)
+- Lelkészi hivatal: Str. Petőfi Sándor nr. 4, 517261 Bucerdea Grânoasă, jud. Alba, România
+- E-mail: buzasbocsardi.refgyul@gmail.com
+- Facebook: https://www.facebook.com/BuzasbocsardiReformatusEgyhazkozseg (hírek, élő közvetítés)
+- Alsókarácsonyfalvi leányegyházközség: Str. 6 Martie nr. 120, Crăciunelu de Jos, jud. Alba
+
+## Istentiszteletek
+
+- Alsókarácsonyfalva (Crăciunelu de Jos): minden vasárnap 9:30
+- Búzásbocsárd (Bucerdea Grânoasă): minden vasárnap 11:00 (élő közvetítés a Facebook-oldalon)
+
+## Búzásbocsárdi református templom
+
+- Első írásos említés a településről: 1303 (Bochard); 1332-ben már plébániatemplom
+- A reformáció a 16. század második felében; faragott kőszószék 1657-ből
+- 14. századi gótikus szentély, 1866-os átépítés, 25 m magas zsindelyes fatorony
+- Középkori nagyharang (kb. 1450, Nagyszeben, 800–900 kg), felirata: „O Rex Glorie veni nobis cum pace"
+- Orgona: Kolonics István, Kézdivásárhely, 1878–1879
+- Műemlékkód: AB-II-m-B-00194
+
+## Oldalak
+
+- [Kezdőlap](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/): alkalmak, hitvallás, támogatók, kapcsolat
+- [Búzásbocsárd](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/bocsard): a falu és a templom története, lelkipásztorok névsora 1773-tól
+- [Alsókarácsonyfalva](https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/karacsonyfalva): a falu és a leányegyházközség története
+
+## Támogatók
+
+Bethlen Gábor Alap (Bethlen Gábor Alapkezelő Zrt.), Communitas Alapítvány, Consiliul Județean Alba, Consiliul Local Bucerdea Grânoasă, Consiliul Local Crăciunelu de Jos.

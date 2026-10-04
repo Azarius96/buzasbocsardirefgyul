@@ -1,84 +1,81 @@
 # Búzásbocsárdi Református Egyházközség – weboldal
 
-A Búzásbocsárdi Református Egyházközség (Bucerdea Grânoasă, jud. Alba, Románia) statikus
-weboldala. [Astro](https://astro.build) + [Tailwind CSS](https://tailwindcss.com), kifejezetten
-Cloudflare-re optimalizálva: teljesen statikus kimenet, önállóan kiszolgált fontok, külső
-szkriptek nélkül.
+Statikus weboldal (HTML + CSS + JS, build lépés nélkül). A teljes oldal a `public/` mappában van.
 
-## Fejlesztés
-
-Node.js **22.12.0 vagy újabb** szükséges (lásd `.nvmrc`).
-
-```bash
-nvm use          # 22.12.0
-npm ci
-npm run dev      # http://localhost:4321
+```
+public/
+  index.html            Kezdőlap (alkalmak, hitvallás, Facebook-hírek, támogatók, kapcsolat)
+  bocsard.html          Búzásbocsárd – falu- és templomtörténet, lelkészek, képek
+  karacsonyfalva.html   Alsókarácsonyfalva – falu- és templomtörténet
+  404.html
+  _headers              Cloudflare HTTP-fejlécek
+  assets/               stíluslap, JS, képek, támogatói logók
+wrangler.jsonc          Cloudflare-konfiguráció
 ```
 
-| Script                 | Leírás                                     |
-| ---------------------- | ------------------------------------------ |
-| `npm run dev`          | fejlesztői szerver                         |
-| `npm run build`        | statikus build a `dist/` könyvtárba        |
-| `npm run preview`      | a build előnézete                          |
-| `npm run check`        | `astro check` (típus- és sablonellenőrzés) |
-| `npm run format`       | Prettier formázás                          |
-| `npm run format:check` | formázás ellenőrzése (CI)                  |
-| `npm run deploy`       | build + `wrangler deploy`                  |
+## Közzététel Cloudflare-en
 
-## Tartalom szerkesztése
-
-A szövegek nagy része adatvezérelt, egyetlen fájlban: [`src/data/site.ts`](src/data/site.ts).
-
-- `contact` – lelkipásztor, e-mail-címek, postai cím, koordináták
-- `services` – istentiszteleti rend (**az időpontokat a lelkipásztorral egyeztetve kell
-  véglegesíteni**)
-- `timeline` – történeti idővonal
-- `ministers` – lelkészek listája
-- `nav` – menüpontok
-
-Az egyes oldalak a `src/pages/` könyvtárban találhatók (fájlnév = útvonal).
-
-## Kiszolgálás Cloudflare-en
-
-Két lehetőség van, mindkettő ugyanazt a `dist/` kimenetet szolgálja ki:
-
-### 1. Cloudflare Pages (ajánlott, git-alapú)
-
-Új Pages projekt a repóhoz kötve:
-
-- **Build command:** `npm run build`
-- **Build output directory:** `dist`
-- **Environment variable:** `NODE_VERSION=22.12.0`
-
-Minden `main`-re push automatikusan deployol, a PR-ok pedig preview URL-t kapnak.
-
-### 2. Workers static assets (`wrangler`)
+**A) Parancssorból (Wrangler):**
 
 ```bash
 npx wrangler login
-npm run deploy
+npx wrangler deploy
 ```
 
-A beállítások a [`wrangler.jsonc`](wrangler.jsonc) fájlban vannak (`assets.directory: ./dist`,
-404-es oldal kezelése, trailing slash elhagyása).
+Az oldal ezután a `https://buzasbocsard-reformatus.<fiók>.workers.dev` címen érhető el;
+saját domain a Cloudflare irányítópulton (Workers & Pages → a projekt → Settings → Domains) adható hozzá.
 
-### Fejlécek, átirányítások, cache
+**B) Git-tárolóból (GitHub → Cloudflare):** töltsd fel a mappát egy GitHub-tárolóba, majd a Cloudflare
+irányítópulton: *Workers & Pages → Create → Import a repository*. Build parancs: nincs; kimeneti mappa: `public`.
 
-- [`public/_headers`](public/_headers) – biztonsági fejlécek (CSP, HSTS, `X-Frame-Options`,
-  `Permissions-Policy`) és cache-szabályok: a hash-elt `/_astro/*` assetek egy évig
-  `immutable`, a HTML mindig újravalidál.
-- [`public/_redirects`](public/_redirects) – régi/alternatív útvonalak 301-es átirányítása.
-- A CSP `frame-src` direktívája az OpenStreetMap beágyazott térképét engedi (kapcsolat oldal).
-  Ha másik térképszolgáltatóra váltunk, ezt frissíteni kell.
+## Facebook
 
-## Képek hozzáadása
+A hírek a gyülekezet Facebook-oldalán jelennek meg; a weboldal ide hivatkozik (menü, Alkalmak, Hírek, Kapcsolat, lábléc):
+https://www.facebook.com/BuzasbocsardiReformatusEgyhazkozseg
 
-A `public/` könyvtárba tett képek a gyökérből érhetők el (pl. `public/templom.jpg` →
-`/templom.jpg`). Optimalizált változatokhoz érdemes az Astro `<Image />` komponensét használni a
-`src/assets/` könyvtárból importált képekkel.
+## Tartalom és források
 
-## Domain
+Minden történeti adat forrással van jelölve (az aloldalak alján „Források” lista):
+- *Küküllő-mente, Küküllőszög* útikönyv, 384–387. o.
+- nre.ro – Nagyenyedi Református Egyházmegye, gyülekezeti adatlap (a fényképek forrása is)
+- reformatus.ro – EREK címtár (elérhetőségek)
+- hu/ro/en Wikipédia, maszol.ro cikkek
 
-A `astro.config.mjs` `site` értéke (`https://buzasbocsard.ro`) a canonical URL-eket, a sitemapet
-és az OG metaadatokat határozza meg – éles domain esetén ezt és a
-[`public/robots.txt`](public/robots.txt) sitemap sorát kell frissíteni.
+### Ellenőrizendő / kiegészítendő
+- **Istentiszteleti rend:** vasárnap 9:30 Alsókarácsonyfalva, 11:00 Búzásbocsárd (`index.html` „Alkalmak” rész,
+  ill. `karacsonyfalva.html`). Új alkalom (bibliaóra, ifjúsági) ugyanitt adható hozzá.
+- **Kötő Ferencz Barna szolgálatának vége** (2016–2024) a 2024. októberi beiktatás alapján szerepel.
+- **Templomépítés éve:** az útikönyv szerint 1866-ban átépítették; a nre.ro és a Wikipédia 1926-ot említ
+  (ez valószínűleg az alsókarácsonyfalvi templom éve). Az oldal az útikönyvet követi.
+- **Fényképek:** az nre.ro egyházmegyei oldaláról valók – érdemes saját, nagyobb felbontású képekre cserélni
+  (`public/assets/img/`, azonos fájlnévvel).
+- **Crăciunelu de Jos:** a községnek nincs közzétett logója/címere (hivatalos honlapján is csak felirat van),
+  ezért feliratos jelvény szerepel. Ha a polgármesteri hivataltól kaptok logót, tedd `public/assets/logos/craciunelu.png`
+  néven, és cseréld a `.wordmark` blokkot `<img>`-re az `index.html`-ben.
+
+## Helyi előnézet
+
+```bash
+python3 -m http.server 8787 -d public
+```
+
+## Keresőoptimalizálás (Google, Bing, MI-asszisztensek)
+
+- `public/robots.txt` – minden kereső és MI-robot (GPTBot, ClaudeBot, PerplexityBot, Google-Extended stb.) számára engedélyezett
+- `public/sitemap.xml` – oldaltérkép
+- `public/llms.txt` – tömör összefoglaló MI-asszisztenseknek
+- Minden oldalon: canonical link, Open Graph, schema.org JSON-LD (Organization + két Church, istentiszteleti időpontokkal)
+- `public/<kulcs>.txt` – IndexNow-kulcs (Bing, Yandex, Seznam, Naver azonnali értesítése)
+
+**Ha saját domainre költözik az oldal**, a régi címet (`buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev`)
+mindenhol cserélni kell az újra:
+
+```bash
+grep -rl "szabo-laszlo-lorand.workers.dev" public | xargs sed -i '' 's#buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev#UJ-DOMAIN.ro#g'
+```
+
+Tartalom módosítása után (deploy után) a keresők értesítése IndexNow-val:
+
+```bash
+curl -X POST https://api.indexnow.org/indexnow -H "Content-Type: application/json" -d '{"host":"buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev","key":"f5a751f81e5c72ed4148dc3b71bb60eb","urlList":["https://buzasbocsard-reformatus.szabo-laszlo-lorand.workers.dev/"]}'
+```
